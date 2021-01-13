@@ -63,7 +63,7 @@ print('Number of owned games: ' + str(getOwnedGameCount()))
 
 for game in getOwnedGameIds():
     print('Total number of achievements for ' + game['name'] + ' is: ' + str(getNumberOfAchievementsForGame(str(game['appid']))))
-    getUserStatsForGame(str(game['appid']))
+    getAchievementRateForGame(str(game['appid']), getNumberOfAchievementsForGame(str(game['appid'])))
     
 
 input()
