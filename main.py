@@ -22,18 +22,33 @@ def getOwnedGameIds():
         gameIds.append({'appid':game['appid'], 'name':game['name']})
     return gameIds
 
+def getNumberOfAchievementsForGame(appId):
+    #GetGlobalAchievementPercentagesForApp v0002
+    gameStats = callSteamWebAPIMethod('ISteamUserStats', 'GetGlobalAchievementPercentagesForApp', '0002', '&gameid='+appId)
+    print(gameStats)
+
+
 def getUserStatsForGame(appId):
+    totalAchievements=0 #Must be replaced by call to getNumberOfAchievementsForGame()
+    totalAchieved=0
     userStatsForGame = callSteamWebAPIMethod('ISteamUserStats', 'GetUserStatsForGame', '0002', '&steamId='+steamId+'&appid='+appId)
     if 'playerstats' in userStatsForGame:
+        #print(userStatsForGame['playerstats'])
         if 'achievements' in userStatsForGame['playerstats']:
             for achievement in userStatsForGame['playerstats']['achievements']:
-                
-            print(userStatsForGame['playerstats']['achievements'])
+                totalAchievements += 1
+                if 'achieved' in achievement:
+                    totalAchieved += 1
+            print('Total achievements: ' + str(totalAchievements))
+            print('Achieved: ' + str(totalAchieved))
+            completionRate = totalAchieved / totalAchievements * 100
+            print('Completion rate is: ' + str(completionRate))
         
 print('Number of owned games: ' + str(getOwnedGameCount()))
 
 for game in getOwnedGameIds():
     print(game)
+    getNumberOfAchievementsForGame(str(game['appid']))
     getUserStatsForGame(str(game['appid']))
     
 
