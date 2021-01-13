@@ -52,10 +52,14 @@ for game in getOwnedGameIds():
         if completionRate > 0:
             totalRanked +=1
             sumOfAllRates += math.floor(completionRate)
-            print('Completion rate for "' + game['name'] + '" is ' + str(completionRate) + '%')
-            
+            print('Completion rate for "' + game['name'] + '" is ' + str(math.floor(completionRate)) + '%')
+
+# Account for refunded games
+totalRanked += 3
+
 totalGameAchievementRate = sumOfAllRates / totalRanked
 print('\nTotal game completion rate is ' + str(totalGameAchievementRate) + '%')
 
+# TODO: calculate remaining % to boost total avg %
 
 input()
