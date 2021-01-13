@@ -54,16 +54,15 @@ def getUserStatsForGame(appId):
                 totalAchievements += 1
                 if 'achieved' in achievement:
                     totalAchieved += 1
-            print('Total achievements: ' + str(totalAchievements))
-            print('Achieved: ' + str(totalAchieved))
             completionRate = totalAchieved / totalAchievements * 100
             print('Completion rate is: ' + str(completionRate))
         
 print('Number of owned games: ' + str(getOwnedGameCount()))
 
 for game in getOwnedGameIds():
-    print('Total number of achievements for ' + game['name'] + ' is: ' + str(getNumberOfAchievementsForGame(str(game['appid']))))
-    getAchievementRateForGame(str(game['appid']), getNumberOfAchievementsForGame(str(game['appid'])))
-    
+    totalAchievements = getNumberOfAchievementsForGame(str(game['appid']))
+    print('Total number of achievements for ' + game['name'] + ' is: ' + str(totalAchievements))
+    if totalAchievements > 0:
+        getAchievementRateForGame(str(game['appid']), totalAchievements)
 
 input()
